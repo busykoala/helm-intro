@@ -1,0 +1,5 @@
+namespace: helm-intro
+
+nginx:
+  replicas: 1
+  image: nginx:latest
