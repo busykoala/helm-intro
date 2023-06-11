@@ -132,3 +132,4 @@ minikube delete
 - [Chart structure](./chart-structure.md)
 - [Helm lint](https://helm.sh/docs/helm/helm_lint/)
 - [Kube-Score](https://github.com/zegl/kube-score#example-with-helm)
+- [Best practices](https://codersociety.com/blog/articles/helm-best-practices)
