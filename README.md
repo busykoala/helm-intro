@@ -44,24 +44,24 @@ In `templates/deployment.yaml` a deployment is defined with
 a pod template for a default nginx server.
 In `templates/service.yaml` there is a service called `nginx-service`
 exposing the pod on a node port.
-
+In `templates/configmap.yaml` there is the `index.html` page
+replacing the nginx default (mounted in the deployment).
 
 ```bash
 # minikube has this neat way of getting the url for the service
 minikube service nginx-service --url -n helm-intro
 ```
 
-Let's see if there is `Welcome to nginx!` on this url...
+Let's see if there is `Welcome to the helm intro!` on this url
+and whether it looks very much green.
 
 ## Upgrade the chart
 
-Seems like there is a lot of load on your app now 😱,
-let's change the number of replicas in `values.yaml` to 2.
+Seems like the designer thinks fuchsia seems to a better color 😱,
+let's change the nginx `backgroundColor` in `values.yaml` to `fuchsia`.
 
-Assuming I am super careful, I would want to know what is going to
-happen if I now upgrade this chart.
-Helm doesn't provide that info out of the box, but there is a
-super cool plugin to check what's gonna happen.
+To verify the change before upgrading this chart now, you can
+use this super cool plugin to check what's gonna happen.
 
 ```bash
 # download the plugin (this will simply place the repo into
@@ -73,8 +73,9 @@ helm plugin install https://github.com/databus23/helm-diff
 helm diff upgrade intro . -n helm-intro -f values.yaml
 ```
 
-Looks good, right? Only the replica number changed in our
-deployment. Time to actually do the change.
+Looks good, right? Only the background color changed in our
+configmap plus the checksum in the deployment annotations.
+Time to actually do the change.
 
 ```bash
 helm upgrade intro . -n helm-intro -f values.yaml
@@ -89,7 +90,7 @@ helm diff revision -n helm-intro intro 1 2
 
 ## Rollback
 
-Oh snap! That load nginx is creating now is just not acceptable 😋.
+Oh snap! Fuchsia looks terrible 😋.
 Let's rollback, but check the diff in advance - just to be sure...
 
 ```bash
@@ -97,7 +98,7 @@ Let's rollback, but check the diff in advance - just to be sure...
 helm diff rollback -n helm-intro intro 1
 ```
 
-This looks good, rolling back will again set the replica to 1.
+This looks good, rolling back will again set the color to green.
 Let's go with that change and rollback the release.
 
 ```bash
