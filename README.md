@@ -125,3 +125,7 @@ kubectl delete ns helm-intro
 # delete the minikube cluster
 minikube delete
 ```
+
+## Further resources
+
+- [Chart structure](./chart-structure.md)
